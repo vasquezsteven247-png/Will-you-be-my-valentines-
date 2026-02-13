@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine?</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at bottom, #0d1b2a, #000814);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+/* Stars */
+body::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-image: radial-gradient(white 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.05;
+    animation: starsMove 80s linear infinite;
+}
+@keyframes starsMove {
+    from { transform: translateY(0); }
+    to { transform: translateY(-800px); }
+}
+
+/* Scene */
+.scene {
+    text-align: center;
+    animation: zoom 30s ease-in-out infinite alternate;
+}
+@keyframes zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+}
+
+/* Garden */
+.garden {
+    display: flex;
+    gap: 120px;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 60px;
+}
+
+/* Flower */
+.flower-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: sway 4s ease-in-out infinite alternate;
+}
+@keyframes sway {
+    from { transform: rotate(-2deg); }
+    to { transform: rotate(2deg); }
+}
+
+.stem {
+    width: 6px;
+    height: 150px;
+    background: linear-gradient(to top, #2ecc71, #27ae60);
+    border-radius: 10px;
+    animation: grow 3s ease forwards;
+}
+@keyframes grow {
+    from { height: 0; }
+    to { height: 150px; }
+}
+
+.flower {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    margin-bottom: -20px;
+    transform: scale(0);
+    animation: bloom 3s ease forwards;
+    animation-delay: 2.5s;
+}
+@keyframes bloom { to { transform: scale(1); } }
+
+.petal {
+    position: absolute;
+    width: 40px;
+    height: 60px;
+    background: linear-gradient(to top, #5dade2, #85c1e9);
+    border-radius: 50% 50% 0 0;
+    left: 50%;
+    transform-origin: bottom center;
+    box-shadow: 0 0 20px rgba(173,216,230,0.6);
+}
+.left { transform: translateX(-50%) rotate(-40deg); }
+.center { transform: translateX(-50%) rotate(0deg); }
+.right { transform: translateX(-50%) rotate(40deg); }
+
+.center-dot {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #fef9c3;
+    border-radius: 50%;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 20px #fef9c3;
+}
+
+/* Title */
+.title {
+    font-size: 2.8rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    opacity: 0;
+    animation: fadeIn 4s ease forwards, heartbeat 2s ease-in-out infinite;
+    animation-delay: 4s;
+    text-shadow: 0 0 10px #a2d9ff,
+                 0 0 25px #5dade2,
+                 0 0 40px #3498db;
+}
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Buttons */
+.buttons { margin-top: 30px; }
+
+button {
+    padding: 12px 30px;
+    font-size: 1rem;
+    margin: 10px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.yes { background: #3498db; color: white; }
+.no { background: #e74c3c; color: white; position: relative; }
+
+button:hover { transform: scale(1.1); }
+
+.message { margin-top: 15px; min-height: 30px; }
+
+/* Volume Control */
+.volume-control {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+input[type="range"] {
+    width: 150px;
+    accent-color: #5dade2;
+}
+
+/* Falling petals */
+.falling-petal {
+    position: absolute;
+    width: 8px;
+    height: 12px;
+    background: #a2d9ff;
+    border-radius: 50%;
+    opacity: 0.8;
+    box-shadow: 0 0 10px #a2d9ff;
+    animation: fall linear infinite;
+}
+@keyframes fall {
+    0% { transform: translateY(-50px) rotate(0deg); opacity:0; }
+    10% { opacity:1; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity:0; }
+}
+
+</style>
+</head>
+<body>
+
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="scene">
+
+<div class="garden">
+    <div class="flower-wrapper">
+        <div class="flower">
+            <div class="petal left"></div>
+            <div class="petal center"></div>
+            <div class="petal right"></div>
+            <div class="center-dot"></div>
+        </div>
+        <div class="stem"></div>
+    </div>
+    <div class="flower-wrapper">
+        <div class="flower">
+            <div class="petal left"></div>
+            <div class="petal center"></div>
+            <div class="petal right"></div>
+            <div class="center-dot"></div>
+        </div>
+        <div class="stem"></div>
+    </div>
+    <div class="flower-wrapper">
+        <div class="flower">
+            <div class="petal left"></div>
+            <div class="petal center"></div>
+            <div class="petal right"></div>
+            <div class="center-dot"></div>
+        </div>
+        <div class="stem"></div>
+    </div>
+</div>
+
+<div class="title">Will You Be My Valentine?</div>
+
+<div class="buttons">
+    <button class="yes" onclick="startMusic(); sayYes()">Yes 💙</button>
+    <button class="no" onclick="startMusic(); sayNo()">No 😢</button>
+</div>
+
+<div class="message" id="message"></div>
+
+<div class="volume-control">
+    🎧 Volume
+    <input type="range" min="0" max="100" value="20" id="volumeSlider">
+</div>
+
+</div>
+
+<script>
+
+/* Falling petals */
+for(let i=0;i<30;i++){
+    let p=document.createElement("div");
+    p.className="falling-petal";
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=(6+Math.random()*6)+"s";
+    p.style.animationDelay=Math.random()*10+"s";
+    document.body.appendChild(p);
+}
+
+/* Music Logic */
+const music = document.getElementById("bgMusic");
+const slider = document.getElementById("volumeSlider");
+
+music.volume = 0.2; // default low romantic volume
+
+function startMusic(){
+    if(music.paused){
+        music.volume = 0;
+        music.play();
+        fadeInMusic();
+    }
+}
+
+function fadeInMusic(){
+    let vol = 0;
+    const target = slider.value / 100;
+    const fade = setInterval(()=>{
+        if(vol < target){
+            vol += 0.01;
+            music.volume = vol;
+        } else {
+            clearInterval(fade);
+        }
+    }, 100);
+}
+
+slider.addEventListener("input", ()=>{
+    music.volume = slider.value / 100;
+});
+
+/* Buttons */
+let noCount=0;
+const noBtn=document.querySelector(".no");
+const msg=document.getElementById("message");
+
+const convince=[
+"Are you sure? 🥺",
+"I brought you flowers 🌷",
+"I promise cuddles 💕",
+"You’re my favorite person 🥰",
+"Just imagine our dates 😌",
+"I won’t give up 💙",
+"You’re too special ✨",
+"Please? 😭",
+"Okay this is serious...",
+"You know you want to 😉"
+];
+
+function sayNo(){
+    if(noCount<10){
+        msg.innerText=convince[noCount];
+        noCount++;
+        noBtn.style.transform=`translate(${Math.random()*200-100}px,${Math.random()*100-50}px)`;
+    }else{
+        noBtn.style.display="none";
+        msg.innerText="The only answer is YES 💙";
+    }
+}
+
+function sayYes(){
+    msg.innerText="YAYYY!! 💙🌷";
+}
+
+</script>
+
+</body>
+</html>
+
